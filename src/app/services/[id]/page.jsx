@@ -1,5 +1,5 @@
-import Link from "next/link";
 import React from "react";
+
 const allData = [
   {
     id: 1,
@@ -46,34 +46,40 @@ const allData = [
     rating: 4.6,
   },
 ];
-const page = () => {
+
+const page = ({ params }) => {
+  const singleData = allData.find((data) => data.id == params.id);
+
   return (
-    <>
-      <div className="text-5xl ">this services page</div>
-      <div className="grid grid-cols-3  p-10   gap-20 ">
-        {allData.map((data) => (
-          <div key={data.id} className="  bg-gray-200 m-2 w-60 rounded-2xl shadow-2xl shadow-fuchsia-500 relative">
-            <p className="text-3xl absolute top-2 right-2 text-red-500">X</p>
-            <div className=" flex justify-center">
-              <img className="w-40 h-40 bg-green-600 p-2 rounded-full mt-3" src={data.image_url} alt="" />
-            </div>
-            <div className="text-black text-center pb-3">
-              <h1>{data.name}</h1>
-              <p className="font-bold mt-2">{data.origin}</p>
-              <p className="font-bold mt-2 text-orange-400 pb-4">
-                ${data.price}
-              </p>
-              <Link href={`/services/${data.id}`}>
-                <button className="bg-pink-400 px-3 py-1 rounded-xl ">
-                  view
-                </button>
-              </Link>
-              {/* <p className="truncate">{data.description}</p> */}
+    <div>
+      {singleData ? (
+        <div>
+          <h1 className="text-2xl">service details</h1>
+          <div className="  p-10   gap-20">
+            <div className="  bg-gray-200 m-2 w-60 rounded-2xl shadow-2xl shadow-fuchsia-500">
+              <div className=" flex justify-center ">
+                <img
+                  className="w-40 h-40 bg-green-600 p-2 rounded-full"
+                  src={singleData.image_url}
+                  alt=""
+                />
+              </div>
+              <div className="text-black text-center pb-3">
+                <h1>{singleData.name}</h1>
+                <p className="font-bold mt-2">{singleData.origin}</p>
+                <p className="font-bold mt-2 text-orange-400 pb-4">
+                  ${singleData.price}
+                </p>
+                <p className="truncate">{singleData.description}</p>
+ 
+              </div>
             </div>
           </div>
-        ))}
-      </div>
-    </>
+        </div>
+      ) : (
+        <p className="text-center ">page not found</p>
+      )}
+    </div>
   );
 };
 
